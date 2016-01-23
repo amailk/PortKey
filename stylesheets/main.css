@@ -3,6 +3,11 @@
     font-size: 18px;
 }
 
+.note {
+    font-weight: bolder;
+    font-size: 18px;
+}
+
 .note-list li {
     list-style: none;
     background-color: #e0e0dc;
@@ -33,10 +38,11 @@ input {
     margin: 10px auto;
     padding: 10px;
     margin: 0 auto; 
+    font-weight: bolder;
 }
 .note-box h2 {
     color: black;
-    font: bold 18px geneva; 
+    font: bolder 18px geneva; 
 }
 
 .diary-note {

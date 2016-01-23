@@ -31,7 +31,7 @@ class PageHandler(Handler):
         diary_query = Diary.query(ancestor= DEFAULT_KEY).order(-Diary.date)
         diaries = diary_query.fetch()
 
-        self.render("main.html", diaries=diaries, invalid-PageHandler.invalid)
+        self.render("main.html", diaries=diaries, invalid=PageHandler.invalid)
 
 class PlaceHandler(Handler):
     def post(self):
@@ -59,9 +59,14 @@ class PlaceHandler(Handler):
         diary_query = Diary.query(ancestor=DEFAULT_KEY).order(-Diary.date)
         diaries = diary_query.fetch()
 
-        return diaries
+        result = []
+        for diary in diaries:
+            result.append({"place": diary.place, "note": diary.note})
+
+        self.response.write({"places": result})
 
 
 app = webapp2.WSGIApplication([
-    ('/places', PlaceHandler)
+    ('/places', PlaceHandler),
+    ('/', PageHandler)
 ], debug=True)
