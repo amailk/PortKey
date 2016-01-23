@@ -20,6 +20,8 @@ from google.appengine.ext import ndb
 from handler import Handler
 from diary_entry import Diary
 
+import uuid
+
 DEFAULT_KEY = ndb.Key('KEY', "DEFAULT_KEY")
 
 class PageHandler(Handler):
@@ -37,6 +39,7 @@ class PlaceHandler(Handler):
     def post(self):
         note = self.request.get("note")
         place = self.request.get("place")
+        photo = str(self.request.get("photo"))
 
         # Check if diary entry or place is invalid
         if len(place.strip()) == 0 or len(note.strip()) == 0:
@@ -49,6 +52,8 @@ class PlaceHandler(Handler):
             new_diary = Diary(parent=DEFAULT_KEY)
             new_diary.note = note
             new_diary.place = place
+            new_diary.photo = photo
+            new_diary.photo_key = uuid.uuid4().hex
 
             # Save in the data-store
             new_diary.put()
@@ -65,8 +70,23 @@ class PlaceHandler(Handler):
 
         self.response.write({"places": result})
 
+class ImageHandler(Handler):
+    def get(self):
+        photo_key = self.request.get("photo_key")
+        query = Diary.query(Diary.photo_key == photo_key, ancestor=DEFAULT_KEY)
+        diaries = query.fetch()
+        diary = diaries[0]
+
+        if diary.photo:
+            self.response.headers['Content-Type'] = 'image/png'
+            self.response.out.write(diary.photo)
+        else:
+            self.response.out.write('No Image')
+
+
 
 app = webapp2.WSGIApplication([
     ('/places', PlaceHandler),
+    ('/images', ImageHandler),
     ('/', PageHandler)
 ], debug=True)
