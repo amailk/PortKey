@@ -1,0 +1,51 @@
+.place {
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+.note-list li {
+    list-style: none;
+    background-color: #e0e0dc;
+    margin: 10px;
+    padding: 4px;
+    border-radius: 4px;
+    color: black;
+}
+
+input[type="submit"] {
+    background: #b6b8be;
+    color: white;
+    font: bold 18px geneva; 
+    font-weight: light;
+    border-radius: 5px;
+}
+
+input {
+    border: 0;
+    padding: 10px;
+    font: bold 18px geneva; 
+}
+
+.note-box {
+    border-color: #0d0d0d;
+    border-radius: 20px;
+    background-color: #ffe5e5;
+    margin: 10px auto;
+    padding: 10px;
+    margin: 0 auto; 
+}
+.note-box h2 {
+    color: black;
+    font: bold 18px geneva; 
+}
+
+.diary-note {
+    text-indent: 50px;
+}
+
+.note-error {
+    color: #ff0000;
+    font: bolder 14px geneva; 
+}
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+        <script src="scripts/main.js"></script>
+    </head>
+    <body>
+
+        {% if diaries %}
+            <div class= "note-box" id="notes">
+                <h2>Notes</h2>
+                <ul class= "note-list">
+                    {% for diary in diaries %}
+                        <li>
+                            <div class="place-note-box">
+                                <div class="diary-place"> {{ diary.place }} :</div>
+                                <div class="diary-note"> {{diary.note}} :</div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form action="/places" method="post">
+            <div class="place-box">
+                <div class = "place">
+                    Place </br>
+                </div>
+
+                </br>
+
+                <div class= "note">
+                    Note </br>
+                    <textarea name="note" rows="1" cols="60"> </textarea>
+                </div>
+                {% if invalid %}
+                    <div class="note-error">
+                        <p> Sorry, your note is invalid! Please try again </p>
+                    </div>
+                {% endif %}
+
+                <div class = "post-note">
+                    <input type = "submit" value= "Note">
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
