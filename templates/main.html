@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <!-- <link rel="stylesheet" type="text/css" href="stylesheets/main.css"> -->
+        <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
         <script src="scripts/main.js"></script>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -15,17 +15,44 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
+        <h2>Places</h2>
+        <form action="/places" method="post" enctype="multipart/form-data">
+            <div class = "place" class="form-group">
+                <label for="placeInput"> Place </label>
+                <input name="place" id="placeInput" placeholder="Place"></textarea>
+            </div>
+
+            </br>
+            
+            <div class= "note" class="form-group">
+                <label for="noteInput"> Note </label>
+                <textarea name="note" id="noteInput" placeholder="Note"> </textarea>
+            </div>
+            {% if invalid %}
+                <div class="note-error">
+                    <p> Sorry, your note is invalid! Please try again </p>
+                </div>
+            {% endif %}
+            </br>
+            <div class = "upload-image">
+                <input type = "file" name="photo" id = "photo">
+            </div>
+            </br>
+            <div class = "post-note">
+                <input type = "submit" value= "Post" class = "btn btn-default">
+                
+            </div>
+        </form>
 
         {% if diaries %}
-            <div class= "note-box" id="notes">
-                <h2>Places</h2>
+            <div class= "note-box" id="notes" class="page-header">    
                 <ul class= "note-list">
                     {% for diary in diaries %}
                         <li>
                             <div class="place-note-box">
                                 <div class="diary-place"> {{ diary.place }} </div>
                                 <div class="diary-note"> {{diary.note}} </div>
-                                <div class="diary-photo"> <img src="/images?photo_key={{diary.photo_key}}" height="250px"> </img> </div>
+                                <div class="diary-photo"> <img src="/images?photo_key={{diary.photo_key}}" alt="Photo of {{diary.place}}" height= "280px" class="img-rounded"> </img> </div>
                             </div>
                         </li>
                     {% endfor %}
@@ -33,34 +60,6 @@
             </div>
         {% endif %}
 
-        <form action="/places" method="post" enctype="multipart/form-data">
-            <div class="place-box">
-                <div class = "place">
-                    Place </br>
-                    <textarea name="place" rows="1" cols="60"></textarea>
-                </div>
-
-                </br>
-                
-                <div class= "note">
-                    Note </br>
-                    <textarea name="note" rows="5" cols="60"> </textarea>
-                </div>
-                {% if invalid %}
-                    <div class="note-error">
-                        <p> Sorry, your note is invalid! Please try again </p>
-                    </div>
-                {% endif %}
-                </br>
-                <div class = "upload-image">
-                    <input type = "file" name="photo" id = "photo">
-                </div>
-                </br>
-                <div class = "post-note">
-                    <input type = "submit" value= "Post" class = "btn btn-default">
-                    
-                </div>
-            </div>
-        </form>
+        
     </body>
 </html>

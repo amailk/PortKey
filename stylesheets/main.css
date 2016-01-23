@@ -1,57 +1,11 @@
-.place {
-    font-weight: bolder;
-    font-size: 18px;
+body {
+    text-align: center;
+    background-image: url("http://41.media.tumblr.com/70fc386803c254262dab0bc986330540/tumblr_mzco95SCNH1rxgqajo1_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
 }
 
-.note {
-    font-weight: bolder;
-    font-size: 18px;
+form {
+    display: inline-block;
 }
-
-.note-list li {
-    list-style: none;
-    background-color: #e0e0dc;
-    margin: 10px;
-    padding: 4px;
-    border-radius: 4px;
-    color: black;
-}
-
-input[type="submit"] {
-    background: #b6b8be;
-    color: white;
-    font: bold 18px geneva; 
-    font-weight: light;
-    border-radius: 5px;
-}
-
-input {
-    border: 0;
-    padding: 10px;
-    font: bold 18px geneva; 
-}
-
-.note-box {
-    border-color: #0d0d0d;
-    border-radius: 20px;
-    background-color: #ffe5e5;
-    margin: 10px auto;
-    padding: 10px;
-    margin: 0 auto; 
-    font-weight: bolder;
-}
-.note-box h2 {
-    color: black;
-    font: bolder 18px geneva; 
-}
-
-.diary-note {
-    text-indent: 50px;
-}
-
-.note-error {
-    color: #ff0000;
-    font: bolder 14px geneva; 
-}
-
-
