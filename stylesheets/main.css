@@ -1,11 +1,9 @@
-body {
-    text-align: center;
-    background-image: url("http://41.media.tumblr.com/70fc386803c254262dab0bc986330540/tumblr_mzco95SCNH1rxgqajo1_1280.jpg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
 
+.container {
+    text-align: center;
 }
 
 form {
     display: inline-block;
 }
+
