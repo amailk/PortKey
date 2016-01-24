@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 import webapp2
+import datetime
 from google.appengine.ext import ndb
 
 from handler import Handler
@@ -22,6 +23,8 @@ from diary_entry import Diary
 
 import uuid
 import json
+
+from google.appengine.api import images
 
 DEFAULT_KEY = ndb.Key('KEY', "DEFAULT_KEY")
 
@@ -33,7 +36,8 @@ class PageHandler(Handler):
         #Get all the diary entries, sorted by date
         diary_query = Diary.query(ancestor= DEFAULT_KEY).order(-Diary.date)
         diaries = diary_query.fetch()
-
+        for diary in diaries:
+            diary.date_text = diary.date.strftime('%Y, %b %d')
         self.render("main.html", diaries=diaries, invalid=PageHandler.invalid)
 
 class PlaceHandler(Handler):
@@ -55,6 +59,11 @@ class PlaceHandler(Handler):
             new_diary.place = place
             new_diary.photo = photo
             new_diary.photo_key = uuid.uuid4().hex
+
+            today = datetime.date.today()
+
+            new_diary.date_text = today.strftime('%Y, %b %d')
+
 
             # Save in the data-store
             new_diary.put()
