@@ -31,7 +31,9 @@ DEFAULT_KEY = ndb.Key('KEY', "DEFAULT_KEY")
 
 class PageHandler(Handler):
     # Status for the most recently added diary entry to be valid or invalid
-    invalid = False
+    invalidPlace = False
+    invalidNote = False
+    invalidPhoto = False
 
     def get(self):
         user = users.get_current_user()
@@ -42,7 +44,7 @@ class PageHandler(Handler):
             diaries = diary_query.fetch()
             for diary in diaries:
                 diary.date_text = diary.date.strftime('%Y, %b %d')
-            self.render("main.html", diaries=diaries, invalid=PageHandler.invalid, logout_url=users.create_logout_url('/login'))
+            self.render("main.html", diaries=diaries, invalidPlace=PageHandler.invalidPlace, invalidNote=PageHandler.invalidNote, invalidPhoto=PageHandler.invalidPhoto, logout_url=users.create_logout_url('/login'))
         else:
             self.redirect("/login")
 
@@ -53,15 +55,24 @@ class PlaceHandler(Handler):
         note = self.request.get("note")
         place = self.request.get("place")
         photo = str(self.request.get("photo"))
-        
+
         user = users.get_current_user()
         
         if user:
+            invalidFieldFlag = False
             # Check if diary entry or place is invalid
-            if len(place.strip()) == 0 or len(note.strip()) == 0:
-                PageHandler.invalid = True
-            else:
-                PageHandler.invalid = False
+            if len(place.strip()) == 0:
+                PageHandler.invalidPlace = True
+                invalidFieldFlag = True
+            if len(note.strip()) == 0:
+                PageHandler.invalidNote = True
+                invalidFieldFlag = True
+            if len(photo.strip()) < 100:
+                PageHandler.invalidPhoto = True
+                invalidFieldFlag = True
+
+            if not invalidFieldFlag:
+                PageHandler.invalidPlace = PageHandler.invalidNote = PageHandler.invalidPhoto = False
 
                 new_diary = Diary(parent=DEFAULT_KEY)
                 new_diary.note = note

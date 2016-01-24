@@ -30,24 +30,32 @@
                     <div class="form-group">
                         <label for="placeInput"> Place </label>
                         <input name="place" id="placeInput" placeholder="Place" class="form-control"></input>
+                        {% if invalidPlace %}
+                            <div class="alert alert-danger" role="alert">
+                                <p> Sorry, your place is invalid!</p>
+                            </div>
+                        {% endif %}
                     </div>
                     
                     <div class= "note form-group">
                         <label for="noteInput"> Note </label>
                         <textarea name="note" id="noteInput" placeholder="Note" class="form-control" rows="3"></textarea>
+                        {% if invalidNote %}
+                            <div class="alert alert-danger" role="alert">
+                                <p> Sorry, your note is invalid!</p>
+                            </div>
+                        {% endif %}
                     </div>
-
-                    {% if invalid %}
-                        <div class="alert alert-danger" role="alert">
-                            <p> Sorry, your note is invalid! Please try again </p>
-                        </div>
-                    {% endif %}
 
                     <div class="form-group">
                         <input type = "file" name="photo" id = "photo">
+                         {% if invalidPhoto %}
+                            <div class="alert alert-danger" role="alert">
+                                <p> Please upload a photo and try again! </p>
+                            </div>
+                        {% endif %}
                     </div>
-
-                    <button type="submit" class="btn btn-default">Post</button>
+                     <button type="submit" class="btn btn-default">Post</button>
                 </form>
             </div>
         </br>
