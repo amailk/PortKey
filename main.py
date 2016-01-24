@@ -25,6 +25,7 @@ import uuid
 import json
 
 from google.appengine.api import images
+from google.appengine.api import users
 
 DEFAULT_KEY = ndb.Key('KEY', "DEFAULT_KEY")
 
@@ -33,12 +34,18 @@ class PageHandler(Handler):
     invalid = False
 
     def get(self):
+        user = users.get_current_user()
+        if user:
+            pass
+        else:
+            self.redirect("/login")
         #Get all the diary entries, sorted by date
         diary_query = Diary.query(ancestor= DEFAULT_KEY).order(-Diary.date)
         diaries = diary_query.fetch()
         for diary in diaries:
             diary.date_text = diary.date.strftime('%Y, %b %d')
-        self.render("main.html", diaries=diaries, invalid=PageHandler.invalid)
+        self.render("main.html", diaries=diaries, invalid=PageHandler.invalid, logout_url=users.create_logout_url('/'))
+
 
 class PlaceHandler(Handler):
     def post(self):
@@ -93,9 +100,12 @@ class ImageHandler(Handler):
         else:
             self.response.out.write('No Image')
 
-
+class LoginHandler(Handler):
+    def get(self):
+        self.render("login.html", url=users.create_login_url('/'))
 
 app = webapp2.WSGIApplication([
+    ('/login', LoginHandler),
     ('/places', PlaceHandler),
     ('/images', ImageHandler),
     ('/', PageHandler)

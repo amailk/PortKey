@@ -1,10 +1,11 @@
-
-
+.logout_url {
+    font-size: 14 px;
+    text-align: right;
+}
 form {
     display: inline-block;
 }
 
 .page-header {
-    background-image: url("http://s65.podbean.com/pb/6cdf3ab57f25f425e3a090c8d9c9f2dd/56a43367/data2/blogs12/225693/uploads/sky-header.jpg");
     padding: 50px;
 }
