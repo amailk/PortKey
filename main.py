@@ -21,6 +21,7 @@ from handler import Handler
 from diary_entry import Diary
 
 import uuid
+import json
 
 DEFAULT_KEY = ndb.Key('KEY', "DEFAULT_KEY")
 
@@ -66,9 +67,9 @@ class PlaceHandler(Handler):
 
         result = []
         for diary in diaries:
-            result.append({"place": diary.place, "note": diary.note})
+            result.append({"place": diary.place, "note": diary.note, "photoKey": diary.photo_key})
 
-        self.response.write({"places": result})
+        self.response.write(json.dumps({"places": result}))
 
 class ImageHandler(Handler):
     def get(self):
