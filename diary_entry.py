@@ -8,3 +8,4 @@ class Diary(ndb.Model):
     photo = ndb.BlobProperty(indexed=False)
     photo_key = ndb.StringProperty(indexed=True)
     date_text = ndb.StringProperty(indexed=False)
+    user_id = ndb.StringProperty(indexed=True)

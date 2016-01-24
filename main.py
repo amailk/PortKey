@@ -35,16 +35,17 @@ class PageHandler(Handler):
 
     def get(self):
         user = users.get_current_user()
+
         if user:
-            pass
+            #Get all the diary entries, sorted by date
+            diary_query = Diary.query(Diary.user_id == user.user_id(), ancestor=DEFAULT_KEY).order(-Diary.date)
+            diaries = diary_query.fetch()
+            for diary in diaries:
+                diary.date_text = diary.date.strftime('%Y, %b %d')
+            self.render("main.html", diaries=diaries, invalid=PageHandler.invalid, logout_url=users.create_logout_url('/login'))
         else:
             self.redirect("/login")
-        #Get all the diary entries, sorted by date
-        diary_query = Diary.query(ancestor= DEFAULT_KEY).order(-Diary.date)
-        diaries = diary_query.fetch()
-        for diary in diaries:
-            diary.date_text = diary.date.strftime('%Y, %b %d')
-        self.render("main.html", diaries=diaries, invalid=PageHandler.invalid, logout_url=users.create_logout_url('/'))
+
 
 
 class PlaceHandler(Handler):
@@ -52,30 +53,31 @@ class PlaceHandler(Handler):
         note = self.request.get("note")
         place = self.request.get("place")
         photo = str(self.request.get("photo"))
+        
+        user = users.get_current_user()
+        
+        if user:
+            # Check if diary entry or place is invalid
+            if len(place.strip()) == 0 or len(note.strip()) == 0:
+                PageHandler.invalid = True
+            else:
+                PageHandler.invalid = False
 
-        # Check if diary entry or place is invalid
-        if len(place.strip()) == 0 or len(note.strip()) == 0:
-            PageHandler.invalid = True
+                new_diary = Diary(parent=DEFAULT_KEY)
+                new_diary.note = note
+                new_diary.place = place
+                new_diary.photo = photo
+                new_diary.photo_key = uuid.uuid4().hex
+                new_diary.user_id = user.user_id()
+
+
+                # Save in the data-store
+                new_diary.put()
+
+            self.redirect("/#diaries")
         else:
-            PageHandler.invalid = False
+            self.redirect("/login")
 
-            # create a new comment object
-            # set a message and name to it
-            new_diary = Diary(parent=DEFAULT_KEY)
-            new_diary.note = note
-            new_diary.place = place
-            new_diary.photo = photo
-            new_diary.photo_key = uuid.uuid4().hex
-
-            today = datetime.date.today()
-
-            new_diary.date_text = today.strftime('%Y, %b %d')
-
-
-            # Save in the data-store
-            new_diary.put()
-
-        self.redirect("/#diaries")
 
     def get(self):
         diary_query = Diary.query(ancestor=DEFAULT_KEY).order(-Diary.date)

@@ -12,9 +12,10 @@
 
 body {
     background-image: url("http://36.media.tumblr.com/c078cec3240430c46b3a4321f9009a5c/tumblr_nzca753BKO1uuufk2o1_1280.jpg");
-    background-repeat:no-repeat;
+    background-repeat:no-repeat fixed;
     background-size: cover;
-
+    max-width: 100%;
+    height: auto;
 }
 
 .portkey_header {
