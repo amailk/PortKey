@@ -1,11 +1,20 @@
-.logout_url {
-    font-size: 14 px;
-    text-align: right;
-}
 form {
     display: inline-block;
 }
 
 .page-header {
-    padding: 50px;
+    font: 50px courier;
+    letter-spacing: 30px;
+    text-indent: 50px;
 }
+.page-header-text {
+
+}
+
+.page-header small {
+    letter-spacing: 0px;
+    text-indent: 0px;
+    font: 14px arial;
+    margin-right: 5px;
+}
+
